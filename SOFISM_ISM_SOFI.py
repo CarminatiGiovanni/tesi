@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import os
 import cv2
-import tifffile
+import tifffile as tiff
 from PIL import Image
 import h5py
 from matplotlib.patches import Rectangle
@@ -319,6 +319,7 @@ for file in filelist:
     ############################# SOFISM D1
 
         # # ------------------------ d1 SOFISM CONCAT
+    print('working on SOFISM d1... ',end=' ')
     start = time()
     d1=np.asarray([data[0,:,:,:,:,i] for i in index1], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d1=np.transpose(d1,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
@@ -359,8 +360,8 @@ for file in filelist:
     print('done SOFISM D1: ' + str(int(TIME_SOFISM_D1/60)) + 'm' + str(int(TIME_SOFISM_D1%60)) + 's')
     # fig_1 = gra.Show(SOFISM_IMAGES_d1[:,:,0,:],normalize = False, colorbar=True) # SHOW 49 images
 
-    ######################################## SOFISM D3 ####################################à
-
+    ######################################## SOFISM D3 ####################################
+    print('working on SOFISM d3... ',end=' ')
     #    --------------------------- d3 SOFISM CONCAT
     start = time()
     d3=np.asarray([data[0,:,:,:,:,i] for i in index3], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
@@ -377,7 +378,7 @@ for file in filelist:
     for ch1 in range(len(index3)):
         for ch2 in range(ch1,len(index3)):
             chindex += 1
-            print(chindex, end=' ')
+            # print(chindex, end=' ')
             for i in range(d3.shape[0]):
                 for j in range(d3.shape[1]):
                     signal_mean_1 = d3[i,j,:,ch1].mean()
@@ -403,6 +404,7 @@ for file in filelist:
     #------------------------------ SOFISM D5
 
     # ------------------------ d5 SOFISM CONCAT
+    print('working on SOFISM d5... ',end=' ')
     start = time()
     d5=np.asarray([data[0,:,:,:,:,i] for i in index5], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d5=np.transpose(d5,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
@@ -444,6 +446,51 @@ for file in filelist:
     print('done SOFISM D5: ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
 
 
+    # ------------------------ d7 SOFISM CONCAT
+    print('working on SOFISM d7... ',end=' ')
+    try:
+        start = time()
+        d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
+        d7=np.transpose(d7,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+        d7 = d7.reshape(d7.shape[0],d7.shape[1],d7.shape[2]*d7.shape[3],d7.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
+
+        imgN=int(len(index7)*(len(index7)+1)/2) # number of images to be created: TRIANGULAR NUMBER
+
+        SOFISM_CORRELATION_d7 = np.zeros((d7.shape[0],d7.shape[1],d7.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
+        # print('\nSOFISM d7 IMAGES SHAPE: ',SOFISM_CORRELATION_d7.shape)
+
+        chindex=-1
+
+        import scipy as sc
+
+        for ch1 in range(len(index7)):
+            for ch2 in range(ch1,len(index7)):
+                chindex += 1
+                # print(chindex, end=' ')
+                for i in range(d7.shape[0]):
+                    for j in range(d7.shape[1]):
+                        signal_mean_1 = d7[i,j,:,ch1].mean()
+                        signal_mean_2 = d7[i,j,:,ch2].mean()
+                        # print(d7[i,j,:,ch1].shape,d7[i,j,:,ch2].shape)
+                        SOFISM_CORRELATION_d7[i,j,:,chindex] = sc.signal.correlate(d7[i,j,:,ch1]-signal_mean_1, d7[i,j,:,ch2]-signal_mean_2,mode = 'same')
+                        #correlazione(d3[i,j,:,ch1], signal_mean_1, d3[i,j,:,ch2],signal_mean_2)
+
+
+        usf = 10  # upsampling factor = subpixel precision
+        ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+20+29+28+27+26
+
+        shift_vec_D7, SOFISM_D7_CH = apr.APR(SOFISM_CORRELATION_d7[:,:,0,:], usf, ref_d7, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
+        SOFISM_D7 = SOFISM_D7_CH.sum(axis=2)
+
+        end = time()
+        TIME_SOFISM_D7 = end - start
+
+        del SOFISM_D7_CH, shift_vec_D7, SOFISM_CORRELATION_d7
+
+        print('done SOFISM D7: ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    except:
+        pass
+
     # DISPLAY ##############################################################################################################
     fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
 
@@ -456,8 +503,11 @@ for file in filelist:
     gra.ShowImg(SOFISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[0,2])
     ax[0,2].set_title('SOFISM D5 ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
 
-    # gra.ShowImg(SOFISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[0,3])
-    # ax[0,3].set_title('SOFISM D7 ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    try:
+        gra.ShowImg(SOFISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[0,3])
+        ax[0,3].set_title('SOFISM D7 ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    except:
+        pass
 
     gra.ShowImg(SOFI_CONCAT[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,0])
     ax[1,0].set_title('SOFI CONCAT ' + str(int(TIME_SOFI_CONCAT)) + 's')
@@ -484,3 +534,9 @@ for file in filelist:
     ax[2,3].set_title('ISM D7 ' + str(int(TIME_ISM_D7)) + 's')
 
     fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
+
+    try:
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + '.tiff'),
+                    [CENTRAL_SPAD, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
+    except:
+        pass
