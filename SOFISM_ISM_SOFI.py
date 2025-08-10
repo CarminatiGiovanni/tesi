@@ -194,28 +194,28 @@ for file in filelist:
     ISM_D7 = ISM_D7_CH.sum(axis=2)
     end = time()
     TIME_ISM_D7 = end - start
-    print('done ISM D7: ', TIME_ISM_D7, 's')
+    print('done ISM D7: ', np.round(TIME_ISM_D7,2), 's')
 
     start = time()
     shift_vec5, ISM_D5_CH = apr.APR(d5, usf, ref_D5, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
     ISM_D5 = ISM_D5_CH.sum(axis=2)
     end = time()
     TIME_ISM_D5 = end - start
-    print('done ISM D5: ', TIME_ISM_D5, 's')
+    print('done ISM D5: ', np.round(TIME_ISM_D5,2), 's')
 
     start = time()
     shift_vec3, ISM_D3_CH = apr.APR(d3, usf, ref_D3, filter_sigma=1, pxsize = pxsizex*1000)
     ISM_D3 = ISM_D3_CH.sum(axis=2)
     end = time()
     TIME_ISM_D3 = end - start
-    print('done ISM D3: ', TIME_ISM_D3, 's')
+    print('done ISM D3: ', np.round(TIME_ISM_D3,2), 's')
 
     start = time()
     shift_vec1, ISM_D1_CH = apr.APR(d1, usf, ref_D1, filter_sigma=1, pxsize = pxsizex*1000)
     ISM_D1 = ISM_D1_CH.sum(axis=2)
     end = time()
     TIME_ISM_D1 = end - start
-    print('done ISM D1: ', TIME_ISM_D1, 's')
+    print('done ISM D1: ', np.round(TIME_ISM_D1,2), 's')
 
     del d1,d3,d5,d7
     del ISM_D1_CH, ISM_D3_CH, ISM_D5_CH, ISM_D7_CH
@@ -272,7 +272,7 @@ for file in filelist:
 
     end = time()
     TIME_SOFI_MEAN = end - start
-    print('done SOFI MEAN: ', TIME_SOFI_MEAN,'s')
+    print('done SOFI MEAN: ', np.round(TIME_SOFI_MEAN,2),'s')
     # SOFI_MEAN_SBR = SBR(SOFI_MEAN[:,:,0], xsi,xsf,xbi,xbf,ysi,ysf,ybi,ybf)
     # print('done SOFI MEAN - SBR: ', np.round(SOFI_MEAN_SBR,2))
 
@@ -289,7 +289,7 @@ for file in filelist:
 
     end = time()
     TIME_SOFI_SUM = end - start
-    print('done SOFI SUM: ', TIME_SOFI_SUM,'s')
+    print('done SOFI SUM: ', np.round(TIME_SOFI_SUM,2),'s')
     # SOFI_SUM_SBR = SBR(SOFI_SUM[:,:,0], xsi,xsf,xbi,xbf,ysi,ysf,ybi,ybf)
     # print('done SOFI SUM - SBR: ', np.round(SOFI_SUM_SBR,2))
 
@@ -310,13 +310,13 @@ for file in filelist:
 
     end = time()
     TIME_SOFI_CONCAT = end - start
-    print('done SOFI CONCAT: ', TIME_SOFI_CONCAT,'s')
+    print('done SOFI CONCAT: ', np.round(TIME_SOFI_CONCAT,2),'s')
     # SOFI_CONCAT_SBR = SBR(SOFI_CONCAT[:,:,0], xsi,xsf,xbi,xbf,ysi,ysf,ybi,ybf)
     # print('done SOFI CONCAT - SBR: ', np.round(SOFI_CONCAT_SBR,2))
 
     del central,central_concat, central_repsum
 
-    ############################# SOFISM D1
+    # ############################# SOFISM D1
 
         # # ------------------------ d1 SOFISM CONCAT
     print('working on SOFISM d1... ')
@@ -422,7 +422,7 @@ for file in filelist:
     for ch1 in range(len(index5)):
         for ch2 in range(ch1,len(index5)):
             chindex += 1
-            # print(chindex, end=' ')
+            print(chindex, 'd5')
             for i in range(d5.shape[0]):
                 for j in range(d5.shape[1]):
                     signal_mean_1 = d5[i,j,:,ch1].mean()
@@ -446,50 +446,105 @@ for file in filelist:
     print('done SOFISM D5: ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
 
 
-    # ------------------------ d7 SOFISM CONCAT
-    print('working on SOFISM d7... ')
-    try:
-        start = time()
-        d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
-        d7=np.transpose(d7,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
-        d7 = d7.reshape(d7.shape[0],d7.shape[1],d7.shape[2]*d7.shape[3],d7.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
+    # # ------------------------ d7 SOFISM CONCAT
+    # # print('working on SOFISM d7... ')
+    # # try:
+    # #     start = time()
+    # #     d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
+    # #     d7=np.transpose(d7,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+    # #     d7 = d7.reshape(d7.shape[0],d7.shape[1],d7.shape[2]*d7.shape[3],d7.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
-        imgN=int(len(index7)*(len(index7)+1)/2) # number of images to be created: TRIANGULAR NUMBER
+    # #     imgN=int(len(index7)*(len(index7)+1)/2) # number of images to be created: TRIANGULAR NUMBER
+    # #     print(d7.shape)
 
-        SOFISM_CORRELATION_d7 = np.zeros((d7.shape[0],d7.shape[1],d7.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
-        # print('\nSOFISM d7 IMAGES SHAPE: ',SOFISM_CORRELATION_d7.shape)
+    # #     SOFISM_CORRELATION_d7 = np.zeros((d7.shape[0],d7.shape[1],d7.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
+    # #     # print('\nSOFISM d7 IMAGES SHAPE: ',SOFISM_CORRELATION_d7.shape)
 
-        chindex=-1
+    # #     chindex=-1
 
-        import scipy as sc
+    # #     for ch1 in range(len(index7)):
+    # #         for ch2 in range(ch1,len(index7)):
+    # #             chindex += 1
+    # #             print(chindex, 'd7')
+    # #             for i in range(d7.shape[0]):
+    # #                 for j in range(d7.shape[1]):
+    # #                     signal_mean_1 = d7[i,j,:,ch1].mean()
+    # #                     signal_mean_2 = d7[i,j,:,ch2].mean()
+    # #                     # print(d7[i,j,:,ch1].shape,d7[i,j,:,ch2].shape)
+    # #                     SOFISM_CORRELATION_d7[i,j,:,chindex] = sc.signal.correlate(d7[i,j,:,ch1]-signal_mean_1, d7[i,j,:,ch2]-signal_mean_2,mode = 'same')
+    # #                     #correlazione(d3[i,j,:,ch1], signal_mean_1, d3[i,j,:,ch2],signal_mean_2)
+    # try:
 
-        for ch1 in range(len(index7)):
-            for ch2 in range(ch1,len(index7)):
-                chindex += 1
-                # print(chindex, end=' ')
-                for i in range(d7.shape[0]):
-                    for j in range(d7.shape[1]):
-                        signal_mean_1 = d7[i,j,:,ch1].mean()
-                        signal_mean_2 = d7[i,j,:,ch2].mean()
-                        # print(d7[i,j,:,ch1].shape,d7[i,j,:,ch2].shape)
-                        SOFISM_CORRELATION_d7[i,j,:,chindex] = sc.signal.correlate(d7[i,j,:,ch1]-signal_mean_1, d7[i,j,:,ch2]-signal_mean_2,mode = 'same')
-                        #correlazione(d3[i,j,:,ch1], signal_mean_1, d3[i,j,:,ch2],signal_mean_2)
+        
+    #     def batched_fft_correlate(sig1, sig2):
+    #         """
+    #         sig1, sig2: shape (ny, nx, nt)
+    #         Returns correlation with shape (ny, nx, nt)
+    #         mode='same' behavior
+    #         """
+    #         ny, nx, nt = sig1.shape
+    #         # FFT length for 'same' mode
+    #         nfft = nt
+    #         f1 = np.fft.fft(sig1.reshape(-1, nt), n=nfft, axis=1)
+    #         f2 = np.fft.fft(sig2.reshape(-1, nt), n=nfft, axis=1)
+    #         corr = np.fft.ifft(f1 * np.conj(f2), axis=1).real
+    #         # Shift so that center aligns like mode='same'
+    #         corr = np.fft.fftshift(corr, axes=1)
+    #         return corr.reshape(ny, nx, nt)
 
 
-        usf = 10  # upsampling factor = subpixel precision
-        ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+20+29+28+27+26
+    #     from scipy import signal
 
-        shift_vec_D7, SOFISM_D7_CH = apr.APR(SOFISM_CORRELATION_d7[:,:,0,:], usf, ref_d7, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
-        SOFISM_D7 = SOFISM_D7_CH.sum(axis=2)
+    #     print('working on SOFISM d7... ')
+    #     start = time()
 
-        end = time()
-        TIME_SOFISM_D7 = end - start
+    #     # Reshape d7 exactly as before
+    #     d7 = np.asarray([data[0, :, :, :, :, i] for i in index7], dtype='float')  # (ch, z, y, x, t)
+    #     d7 = np.transpose(d7, (2, 3, 4, 1, 0))  # (ch, z, y, x, t) -> (y, x, t, rep, ch)
+    #     d7 = d7.reshape(d7.shape[0], d7.shape[1], d7.shape[2] * d7.shape[3], d7.shape[4])  # -> (y, x, t*rep, ch)
 
-        del SOFISM_D7_CH, shift_vec_D7, SOFISM_CORRELATION_d7
+    #     ny, nx, nt, nch = d7.shape
+    #     imgN = int(nch * (nch + 1) / 2)
+    #     print(d7.shape)
 
-        print('done SOFISM D7: ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
-    except:
-        pass
+    #     SOFISM_CORRELATION_d7 = np.zeros((ny, nx, nt, imgN), dtype=float)
+
+    #     # Precompute mean-subtracted signals for all channels
+    #     d7_centered = d7 - d7.mean(axis=2, keepdims=True)
+
+    #     chindex = -1
+    #     for ch1 in range(nch):
+    #         sig1 = d7_centered[:, :, :, ch1]  # shape (ny, nx, nt)
+    #         for ch2 in range(ch1, nch):
+    #             chindex += 1
+    #             print(chindex, 'd7')
+
+    #             # sig2 = d7_centered[:, :, :, ch2]  # shape (ny, nx, nt)
+
+    #             # # Correlate along time axis for all pixels at once
+    #             # corr = signal.correlate(sig1, sig2, mode='same', method='fft', axes=2)
+
+    #             # SOFISM_CORRELATION_d7[:, :, :, chindex] = corr
+    #              # Extract all time-series for the channel pair
+    #             sig2 = d7_centered[:, :, :, ch2]
+    #             # corr = batched_fft_correlate(sig1, sig2)
+    #             SOFISM_CORRELATION_d7[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
+
+
+    #     usf = 10  # upsampling factor = subpixel precision
+    #     ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+20+29+28+27+26
+
+    #     shift_vec_D7, SOFISM_D7_CH = apr.APR(SOFISM_CORRELATION_d7[:,:,0,:], usf, ref_d7, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
+    #     SOFISM_D7 = SOFISM_D7_CH.sum(axis=2)
+
+    #     end = time()
+    #     TIME_SOFISM_D7 = end - start
+
+    #     del SOFISM_D7_CH, shift_vec_D7, SOFISM_CORRELATION_d7
+
+    #     print('done SOFISM D7: ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    # except Exception as e:
+    #     print(repr(e))
 
     # DISPLAY ##############################################################################################################
     fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
@@ -510,28 +565,28 @@ for file in filelist:
         pass
 
     gra.ShowImg(SOFI_CONCAT[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,0])
-    ax[1,0].set_title('SOFI CONCAT ' + str(int(TIME_SOFI_CONCAT)) + 's')
+    ax[1,0].set_title('SOFI CONCAT ' + str(np.round(TIME_SOFI_CONCAT,2)) + 's')
 
     gra.ShowImg(SOFI_MEAN[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,1])
-    ax[1,1].set_title('SOFI MEAN ' + str(int(TIME_SOFI_MEAN)) + 's')
+    ax[1,1].set_title('SOFI MEAN ' + str(np.round(TIME_SOFI_MEAN,2)) + 's')
 
     gra.ShowImg(SOFI_SUM[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,2])
-    ax[1,2].set_title('SOFI SUM ' + str(int(TIME_SOFI_SUM)) + 's')
+    ax[1,2].set_title('SOFI SUM ' + str(np.round(TIME_SOFI_SUM,2)) + 's')
 
     gra.ShowImg(CENTRAL_SPAD, pxsize_x = pxsizex, fig = fig, ax = ax[1,3])
     ax[1,3].set_title('CENTRAL SPAD ')
 
     gra.ShowImg(ISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[2,0])
-    ax[2,0].set_title('ISM D1 ' + str(int(TIME_ISM_D1)) + 's')
+    ax[2,0].set_title('ISM D1 ' + str(np.round(TIME_ISM_D1,2)) + 's')
 
     gra.ShowImg(ISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[2,1])
-    ax[2,1].set_title('ISM D3 ' + str(int(TIME_ISM_D3)) + 's')
+    ax[2,1].set_title('ISM D3 ' + str(np.round(TIME_ISM_D3,2)) + 's')
 
     gra.ShowImg(ISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[2,2])
-    ax[2,2].set_title('ISM D5 ' + str(int(TIME_ISM_D5)) + 's')
+    ax[2,2].set_title('ISM D5 ' + str(np.round(TIME_ISM_D5,2)) + 's')
 
     gra.ShowImg(ISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[2,3])
-    ax[2,3].set_title('ISM D7 ' + str(int(TIME_ISM_D7)) + 's')
+    ax[2,3].set_title('ISM D7 ' + str(np.round(TIME_ISM_D7,2)) + 's')
 
     fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
 
