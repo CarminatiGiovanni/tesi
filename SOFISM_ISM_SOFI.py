@@ -44,10 +44,10 @@ index3=[16,17,18,23,24,25,30,31,32]
 index1=[17,23,24,25,31]
 
 
-filelist = ['Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8',
-            'Qdots_770nm_34mW_FOV3um_32x32_50rip_5msPixel_ROI7',
-            'Qdots_770nm_34mW_FOV5um_64x64_30rip_5msPixel_ROI5',
-            'Qdots_770nm_34mW_FOV5um_64x64_50rip_5msPixel_ROI4',
+filelist = [#'Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8',
+            #'Qdots_770nm_34mW_FOV3um_32x32_50rip_5msPixel_ROI7',
+            #'Qdots_770nm_34mW_FOV5um_64x64_30rip_5msPixel_ROI5', # slooooow
+            # 'Qdots_770nm_34mW_FOV5um_64x64_50rip_5msPixel_ROI4', # sloooooow 
             'Qdots_770nm_34mW_FOV5um_64x64_60rip_2msPixel_ROI6'
 ]
 
@@ -413,7 +413,7 @@ for file in filelist:
     imgN=int(len(index5)*(len(index5)+1)/2) # number of images to be created: TRIANGULAR NUMBER
 
     SOFISM_CORRELATION_d5 = np.zeros((d5.shape[0],d5.shape[1],d5.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
-    # print('SOFISM d5 IMAGES SHAPE: ',SOFISM_CORRELATION_d5.shape)
+    print('SOFISM d5 IMAGES SHAPE: ',SOFISM_CORRELATION_d5.shape)
 
     chindex=-1
 
