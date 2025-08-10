@@ -44,18 +44,18 @@ index3=[16,17,18,23,24,25,30,31,32]
 index1=[17,23,24,25,31]
 
 
-filelist = [#'Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8',
-            #'Qdots_770nm_34mW_FOV3um_32x32_50rip_5msPixel_ROI7',
-            #'Qdots_770nm_34mW_FOV5um_64x64_30rip_5msPixel_ROI5', # slooooow
-            # 'Qdots_770nm_34mW_FOV5um_64x64_50rip_5msPixel_ROI4', # sloooooow 
-            'Qdots_770nm_34mW_FOV5um_64x64_60rip_2msPixel_ROI6'
+filelist = ['Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8',
+            'Qdots_770nm_34mW_FOV5um_64x64_60rip_2msPixel_ROI6',
+            'Qdots_770nm_34mW_FOV3um_32x32_50rip_5msPixel_ROI7',
+            'Qdots_770nm_34mW_FOV5um_64x64_30rip_5msPixel_ROI5', # slooooow
+            'Qdots_770nm_34mW_FOV5um_64x64_50rip_5msPixel_ROI4', # sloooooow 
 ]
 
 for file in filelist:
     filename = path.join(dir,'images','2025 07 07-08 Qdots',file) # input
     savename = path.join(dir,'images','output',file) # output
     savenameSOFI = path.join(dir,'images','output','SOFI',file)
-    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL 2.png')
+    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL night.png')
 
     f = h5py.File(filename + '.h5', 'r') # read h5 file
 
@@ -508,7 +508,7 @@ for file in filelist:
                 SOFISM_CORRELATION_d7[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
         usf = 10  # upsampling factor = subpixel precision
-        ref_d7 = 25+24+23+22+21+20+19+18+17+16+15
+        ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+30+29+28+27+26
 
         shift_vec_D7, SOFISM_D7_CH = apr.APR( SOFISM_CORRELATION_d7[:,:,0,:], usf, ref_d7, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
         SOFISM_D7 = SOFISM_D7_CH.sum(axis=2)
@@ -567,7 +567,7 @@ for file in filelist:
     fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
 
     try:
-        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack 2.tiff'),
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack night.tiff'),
                     [CENTRAL_SPAD, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
