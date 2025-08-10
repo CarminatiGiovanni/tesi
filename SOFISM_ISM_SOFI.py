@@ -55,7 +55,7 @@ for file in filelist:
     filename = path.join(dir,'images','2025 07 07-08 Qdots',file) # input
     savename = path.join(dir,'images','output',file) # output
     savenameSOFI = path.join(dir,'images','output','SOFI',file)
-    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL.png')
+    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL 2.png')
 
     f = h5py.File(filename + '.h5', 'r') # read h5 file
 
@@ -316,6 +316,30 @@ for file in filelist:
 
     del central,central_concat, central_repsum
 
+#####################################################################################################
+####################################################################################################
+#                        SOFISM
+#
+#####################################################################################################
+#                                                                                                   #
+#####################################################################################################
+
+    def batched_fft_correlate(sig1, sig2):
+        """
+        sig1, sig2: shape (ny, nx, nt)
+        Returns correlation with shape (ny, nx, nt)
+        mode='same' behavior
+        """
+        ny, nx, nt = sig1.shape
+        # FFT length for 'same' mode
+        nfft = nt
+        f1 = np.fft.fft(sig1.reshape(-1, nt), n=nfft, axis=1)
+        f2 = np.fft.fft(sig2.reshape(-1, nt), n=nfft, axis=1)
+        corr = np.fft.ifft(f1 * np.conj(f2), axis=1).real
+        # Shift so that center aligns like mode='same'
+        corr = np.fft.fftshift(corr, axes=1)
+        return corr.reshape(ny, nx, nt)
+
     # ############################# SOFISM D1
 
         # # ------------------------ d1 SOFISM CONCAT
@@ -323,28 +347,30 @@ for file in filelist:
     start = time()
     d1=np.asarray([data[0,:,:,:,:,i] for i in index1], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d1=np.transpose(d1,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+
     d1 = d1.reshape(d1.shape[0],d1.shape[1],d1.shape[2]*d1.shape[3],d1.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
-    imgN=int(len(index1)*(len(index1)+1)/2) # number of images to be created: TRIANGULAR NUMBER
+    ny, nx, nt, nch = d1.shape
+    imgN = int(nch * (nch + 1) / 2)
+    print(d1.shape)
 
-    SOFISM_CORRELATION_d1 = np.zeros((d1.shape[0],d1.shape[1],d1.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
-    # print('\nSOFISM d1 CORRELATION SHAPE: ',SOFISM_CORRELATION_d1.shape)
+    SOFISM_CORRELATION_d1 = np.zeros((ny, nx, nt, imgN), dtype=float)
+
+        # Precompute mean-subtracted signals for all channels
+    d1_centered = d1 - d1.mean(axis=2, keepdims=True)
 
     chindex=-1
 
     import scipy as sc
 
-    for ch1 in range(len(index1)):
-        for ch2 in range(ch1,len(index1)):
+    for ch1 in range(nch):
+        sig1 = d1_centered[:, :, :, ch1]  # shape (ny, nx, nt)
+        for ch2 in range(ch1, nch, 1):
             chindex += 1
-            # print(chindex, end=' ')
-            for i in range(d1.shape[0]):
-                for j in range(d1.shape[1]):
-                    signal_mean_1 = d1[i,j,:,ch1].mean()
-                    signal_mean_2 = d1[i,j,:,ch2].mean()
-                    # print(d1[i,j,:,ch1].shape,d1[i,j,:,ch2].shape)
-                    SOFISM_CORRELATION_d1[i,j,:,chindex] = sc.signal.correlate(d1[i,j,:,ch1]-signal_mean_1, d1[i,j,:,ch2]-signal_mean_2,mode = 'same')
-                    #correlazione(d3[i,j,:,ch1], signal_mean_1, d3[i,j,:,ch2],signal_mean_2)
+            print(chindex, 'd1')
+            sig2 = d1_centered[:, :, :, ch2]
+            # corr = batched_fft_correlate(sig1, sig2)
+            SOFISM_CORRELATION_d1[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
     usf = 10  # upsampling factor = subpixel precision
     ref_d1 = 5+4
@@ -362,35 +388,38 @@ for file in filelist:
 
     ######################################## SOFISM D3 ####################################
     print('working on SOFISM d3... ')
-    #    --------------------------- d3 SOFISM CONCAT
     start = time()
     d3=np.asarray([data[0,:,:,:,:,i] for i in index3], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d3=np.transpose(d3,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+
     d3 = d3.reshape(d3.shape[0],d3.shape[1],d3.shape[2]*d3.shape[3],d3.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
-    imgN=int(len(index3)*(len(index3)+1)/2) # number of images to be created: TRIANGULAR NUMBER
+    ny, nx, nt, nch = d3.shape
+    imgN = int(nch * (nch + 1) / 2)
+    print(d3.shape)
 
-    SOFISM_CORRELATION_d3 = np.zeros((d3.shape[0],d3.shape[1],d3.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
-    # print('SOFISM D3 IMAGES SHAPE: ',SOFISM_CORRELATION_d3.shape)
+    SOFISM_CORRELATION_d3 = np.zeros((ny, nx, nt, imgN), dtype=float)
+
+        # Precompute mean-subtracted signals for all channels
+    d3_centered = d3 - d3.mean(axis=2, keepdims=True)
 
     chindex=-1
 
-    for ch1 in range(len(index3)):
-        for ch2 in range(ch1,len(index3)):
+    import scipy as sc
+
+    for ch1 in range(nch):
+        sig1 = d3_centered[:, :, :, ch1]  # shape (ny, nx, nt)
+        for ch2 in range(ch1, nch, 1):
             chindex += 1
-            # print(chindex, end=' ')
-            for i in range(d3.shape[0]):
-                for j in range(d3.shape[1]):
-                    signal_mean_1 = d3[i,j,:,ch1].mean()
-                    signal_mean_2 = d3[i,j,:,ch2].mean()
-                    # print(d3[i,j,:,ch1].shape,d3[i,j,:,ch2].shape)
-                    SOFISM_CORRELATION_d3[i,j,:,chindex] = sc.signal.correlate(d3[i,j,:,ch1]-signal_mean_1, d3[i,j,:,ch2]-signal_mean_2,mode = 'same')
-                    #correlazione(d3[i,j,:,ch1], signal_mean_1, d3[i,j,:,ch2],signal_mean_2)
+            print(chindex, 'd3')
+            sig2 = d3_centered[:, :, :, ch2]
+            # corr = batched_fft_correlate(sig1, sig2)
+            SOFISM_CORRELATION_d3[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
     usf = 10  # upsampling factor = subpixel precision
-    ref_d3 = 9+8+7+6
+    ref_d3 = 5+4
 
-    shift_vec_D3, SOFISM_D3_CH = apr.APR(SOFISM_CORRELATION_d3[:,:,0,:], usf, ref_d3, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
+    shift_vec_D3, SOFISM_D3_CH = apr.APR( SOFISM_CORRELATION_d3[:,:,0,:], usf, ref_d3, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
     SOFISM_D3 = SOFISM_D3_CH.sum(axis=2)
 
     end = time()
@@ -408,34 +437,35 @@ for file in filelist:
     start = time()
     d5=np.asarray([data[0,:,:,:,:,i] for i in index5], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d5=np.transpose(d5,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+
     d5 = d5.reshape(d5.shape[0],d5.shape[1],d5.shape[2]*d5.shape[3],d5.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
-    imgN=int(len(index5)*(len(index5)+1)/2) # number of images to be created: TRIANGULAR NUMBER
+    ny, nx, nt, nch = d5.shape
+    imgN = int(nch * (nch + 1) / 2)
+    print(d5.shape)
 
-    SOFISM_CORRELATION_d5 = np.zeros((d5.shape[0],d5.shape[1],d5.shape[2],imgN)) # collection of (N*(N+1))/2 images : (y,x,correlation,img)
-    print('SOFISM d5 IMAGES SHAPE: ',SOFISM_CORRELATION_d5.shape)
+    SOFISM_CORRELATION_d5 = np.zeros((ny, nx, nt, imgN), dtype=float)
+
+        # Precompute mean-subtracted signals for all channels
+    d5_centered = d5 - d5.mean(axis=2, keepdims=True)
 
     chindex=-1
 
     import scipy as sc
 
-    for ch1 in range(len(index5)):
-        for ch2 in range(ch1,len(index5)):
+    for ch1 in range(nch):
+        sig1 = d5_centered[:, :, :, ch1]  # shape (ny, nx, nt)
+        for ch2 in range(ch1, nch, 1):
             chindex += 1
             print(chindex, 'd5')
-            for i in range(d5.shape[0]):
-                for j in range(d5.shape[1]):
-                    signal_mean_1 = d5[i,j,:,ch1].mean()
-                    signal_mean_2 = d5[i,j,:,ch2].mean()
-                    # print(d5[i,j,:,ch1].shape,d5[i,j,:,ch2].shape)
-                    SOFISM_CORRELATION_d5[i,j,:,chindex] = sc.signal.correlate(d5[i,j,:,ch1]-signal_mean_1, d5[i,j,:,ch2]-signal_mean_2,mode = 'same')
-                    #correlazione(d3[i,j,:,ch1], signal_mean_1, d3[i,j,:,ch2],signal_mean_2)
-
+            sig2 = d5_centered[:, :, :, ch2]
+            # corr = batched_fft_correlate(sig1, sig2)
+            SOFISM_CORRELATION_d5[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
     usf = 10  # upsampling factor = subpixel precision
-    ref_d5 = 25+24+23+22+21+20+19+18+17+16+15
+    ref_d5 = 5+4
 
-    shift_vec_D5, SOFISM_D5_CH = apr.APR(SOFISM_CORRELATION_d5[:,:,0,:], usf, ref_d5, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
+    shift_vec_D5, SOFISM_D5_CH = apr.APR( SOFISM_CORRELATION_d5[:,:,0,:], usf, ref_d5, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
     SOFISM_D5 = SOFISM_D5_CH.sum(axis=2)
 
     end = time()
@@ -591,7 +621,7 @@ for file in filelist:
     fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
 
     try:
-        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack.tiff'),
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack 2.tiff'),
                     [CENTRAL_SPAD, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
