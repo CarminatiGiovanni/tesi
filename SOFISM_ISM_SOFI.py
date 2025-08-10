@@ -417,7 +417,7 @@ for file in filelist:
             SOFISM_CORRELATION_d3[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
     usf = 10  # upsampling factor = subpixel precision
-    ref_d3 = 5+4
+    ref_d3 = 9+8+7+6
 
     shift_vec_D3, SOFISM_D3_CH = apr.APR( SOFISM_CORRELATION_d3[:,:,0,:], usf, ref_d3, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
     SOFISM_D3 = SOFISM_D3_CH.sum(axis=2)
@@ -463,7 +463,7 @@ for file in filelist:
             SOFISM_CORRELATION_d5[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
     usf = 10  # upsampling factor = subpixel precision
-    ref_d5 = 5+4
+    ref_d5 = 25+24+23+22+21+20+19+18+17+16+15
 
     shift_vec_D5, SOFISM_D5_CH = apr.APR( SOFISM_CORRELATION_d5[:,:,0,:], usf, ref_d5, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
     SOFISM_D5 = SOFISM_D5_CH.sum(axis=2)
