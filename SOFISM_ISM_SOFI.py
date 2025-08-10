@@ -319,7 +319,7 @@ for file in filelist:
     ############################# SOFISM D1
 
         # # ------------------------ d1 SOFISM CONCAT
-    print('working on SOFISM d1... ',end=' ')
+    print('working on SOFISM d1... ')
     start = time()
     d1=np.asarray([data[0,:,:,:,:,i] for i in index1], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d1=np.transpose(d1,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
@@ -361,7 +361,7 @@ for file in filelist:
     # fig_1 = gra.Show(SOFISM_IMAGES_d1[:,:,0,:],normalize = False, colorbar=True) # SHOW 49 images
 
     ######################################## SOFISM D3 ####################################
-    print('working on SOFISM d3... ',end=' ')
+    print('working on SOFISM d3... ')
     #    --------------------------- d3 SOFISM CONCAT
     start = time()
     d3=np.asarray([data[0,:,:,:,:,i] for i in index3], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
@@ -404,7 +404,7 @@ for file in filelist:
     #------------------------------ SOFISM D5
 
     # ------------------------ d5 SOFISM CONCAT
-    print('working on SOFISM d5... ',end=' ')
+    print('working on SOFISM d5... ')
     start = time()
     d5=np.asarray([data[0,:,:,:,:,i] for i in index5], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
     d5=np.transpose(d5,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
@@ -447,7 +447,7 @@ for file in filelist:
 
 
     # ------------------------ d7 SOFISM CONCAT
-    print('working on SOFISM d7... ',end=' ')
+    print('working on SOFISM d7... ')
     try:
         start = time()
         d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
@@ -536,7 +536,7 @@ for file in filelist:
     fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
 
     try:
-        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + '.tiff'),
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack.tiff'),
                     [CENTRAL_SPAD, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
