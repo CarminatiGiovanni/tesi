@@ -568,6 +568,6 @@ for file in filelist:
 
     try:
         tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack night 2.tiff'),
-                    [CENTRAL_SPAD, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
+                    [CENTRAL_SPAD, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFI_CONCAT[:,:,0], SOFI_MEAN[:,:,0], SOFI_SUM[:,:,0], SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
