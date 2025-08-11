@@ -44,7 +44,7 @@ index3=[16,17,18,23,24,25,30,31,32]
 index1=[17,23,24,25,31]
 
 
-filelist = [# 'Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8',
+filelist = ['Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8',
             'Qdots_770nm_34mW_FOV5um_64x64_60rip_2msPixel_ROI6',
             'Qdots_770nm_34mW_FOV3um_32x32_50rip_5msPixel_ROI7',
             'Qdots_770nm_34mW_FOV5um_64x64_30rip_5msPixel_ROI5', # slooooow
