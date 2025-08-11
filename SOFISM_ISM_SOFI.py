@@ -55,7 +55,7 @@ for file in filelist:
     filename = path.join(dir,'images','2025 07 07-08 Qdots',file) # input
     savename = path.join(dir,'images','output',file) # output
     savenameSOFI = path.join(dir,'images','output','SOFI',file)
-    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL night.png')
+    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL night 2.png')
 
     f = h5py.File(filename + '.h5', 'r') # read h5 file
 
@@ -567,7 +567,7 @@ for file in filelist:
     fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
 
     try:
-        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack night.tiff'),
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack night 2.tiff'),
                     [CENTRAL_SPAD, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
