@@ -523,51 +523,64 @@ for file in filelist:
         print(repr(e))
 
     # DISPLAY ##############################################################################################################
-    fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
+    # fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
 
-    gra.ShowImg(SOFISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[0,0])
-    ax[0,0].set_title('SOFISM D1 ' + str(int(TIME_SOFISM_D1/60)) + 'm' + str(int(TIME_SOFISM_D1%60)) + 's')
+    # gra.ShowImg(SOFISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[0,0])
+    # ax[0,0].set_title('SOFISM D1 ' + str(int(TIME_SOFISM_D1/60)) + 'm' + str(int(TIME_SOFISM_D1%60)) + 's')
 
-    gra.ShowImg(SOFISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[0,1])
-    ax[0,1].set_title('SOFISM D3 ' + str(int(TIME_SOFISM_D3/60)) + 'm' + str(int(TIME_SOFISM_D3%60)) + 's')
+    # gra.ShowImg(SOFISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[0,1])
+    # ax[0,1].set_title('SOFISM D3 ' + str(int(TIME_SOFISM_D3/60)) + 'm' + str(int(TIME_SOFISM_D3%60)) + 's')
 
-    gra.ShowImg(SOFISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[0,2])
-    ax[0,2].set_title('SOFISM D5 ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
+    # gra.ShowImg(SOFISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[0,2])
+    # ax[0,2].set_title('SOFISM D5 ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
+
+    # try:
+    #     gra.ShowImg(SOFISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[0,3])
+    #     ax[0,3].set_title('SOFISM D7 ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    # except:
+    #     pass
+
+    # gra.ShowImg(SOFI_CONCAT[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,0])
+    # ax[1,0].set_title('SOFI CONCAT ' + str(np.round(TIME_SOFI_CONCAT,2)) + 's')
+
+    # gra.ShowImg(SOFI_MEAN[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,1])
+    # ax[1,1].set_title('SOFI MEAN ' + str(np.round(TIME_SOFI_MEAN,2)) + 's')
+
+    # gra.ShowImg(SOFI_SUM[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,2])
+    # ax[1,2].set_title('SOFI SUM ' + str(np.round(TIME_SOFI_SUM,2)) + 's')
+
+    # gra.ShowImg(CENTRAL_SPAD, pxsize_x = pxsizex, fig = fig, ax = ax[1,3])
+    # ax[1,3].set_title('CENTRAL SPAD ')
+
+    # gra.ShowImg(ISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[2,0])
+    # ax[2,0].set_title('ISM D1 ' + str(np.round(TIME_ISM_D1,2)) + 's')
+
+    # gra.ShowImg(ISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[2,1])
+    # ax[2,1].set_title('ISM D3 ' + str(np.round(TIME_ISM_D3,2)) + 's')
+
+    # gra.ShowImg(ISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[2,2])
+    # ax[2,2].set_title('ISM D5 ' + str(np.round(TIME_ISM_D5,2)) + 's')
+
+    # gra.ShowImg(ISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[2,3])
+    # ax[2,3].set_title('ISM D7 ' + str(np.round(TIME_ISM_D7,2)) + 's')
+
+    # fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
+
+    CENTRAL_SPAD = np.array(CENTRAL_SPAD, dtype=np.float32)/np.max(CENTRAL_SPAD)
+    ISM_D1 = np.array(ISM_D1, dtype=np.float32)/np.max(ISM_D1)
+    ISM_D3 = np.array(ISM_D3, dtype=np.float32)/np.max(ISM_D3)
+    ISM_D5 = np.array(ISM_D5, dtype=np.float32)/np.max(ISM_D5)
+    ISM_D7 = np.array(ISM_D7, dtype=np.float32)/np.max(ISM_D7)
+    SOFI_CONCAT = np.array(SOFI_CONCAT[:,:,0], dtype=np.float32)/np.max(SOFI_CONCAT)
+    SOFI_MEAN = np.array(SOFI_MEAN[:,:,0], dtype=np.float32)/np.max(SOFI_MEAN)
+    SOFI_SUM = np.array(SOFI_SUM[:,:,0], dtype=np.float32)/np.max(SOFI_SUM)
+    SOFISM_D1 = np.array(SOFISM_D1, dtype=np.float32)/np.max(SOFISM_D1)
+    SOFISM_D3 = np.array(SOFISM_D3, dtype=np.float32)/np.max(SOFISM_D3)
+    SOFISM_D5 = np.array(SOFISM_D5, dtype=np.float32)/np.max(SOFISM_D5)
+    SOFISM_D7 = np.array(SOFISM_D7, dtype=np.float32)/np.max(SOFISM_D7)
 
     try:
-        gra.ShowImg(SOFISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[0,3])
-        ax[0,3].set_title('SOFISM D7 ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
-    except:
-        pass
-
-    gra.ShowImg(SOFI_CONCAT[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,0])
-    ax[1,0].set_title('SOFI CONCAT ' + str(np.round(TIME_SOFI_CONCAT,2)) + 's')
-
-    gra.ShowImg(SOFI_MEAN[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,1])
-    ax[1,1].set_title('SOFI MEAN ' + str(np.round(TIME_SOFI_MEAN,2)) + 's')
-
-    gra.ShowImg(SOFI_SUM[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,2])
-    ax[1,2].set_title('SOFI SUM ' + str(np.round(TIME_SOFI_SUM,2)) + 's')
-
-    gra.ShowImg(CENTRAL_SPAD, pxsize_x = pxsizex, fig = fig, ax = ax[1,3])
-    ax[1,3].set_title('CENTRAL SPAD ')
-
-    gra.ShowImg(ISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[2,0])
-    ax[2,0].set_title('ISM D1 ' + str(np.round(TIME_ISM_D1,2)) + 's')
-
-    gra.ShowImg(ISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[2,1])
-    ax[2,1].set_title('ISM D3 ' + str(np.round(TIME_ISM_D3,2)) + 's')
-
-    gra.ShowImg(ISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[2,2])
-    ax[2,2].set_title('ISM D5 ' + str(np.round(TIME_ISM_D5,2)) + 's')
-
-    gra.ShowImg(ISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[2,3])
-    ax[2,3].set_title('ISM D7 ' + str(np.round(TIME_ISM_D7,2)) + 's')
-
-    fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
-
-    try:
-        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack night 2.tiff'),
-                    [CENTRAL_SPAD, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFI_CONCAT[:,:,0], SOFI_MEAN[:,:,0], SOFI_SUM[:,:,0], SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack normalized.tiff'),
+                    [CENTRAL_SPAD, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
