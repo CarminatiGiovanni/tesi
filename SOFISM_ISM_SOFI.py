@@ -477,50 +477,50 @@ for file in filelist:
 
 
     # # ------------------------ d7 SOFISM CONCAT
-    try:
-        print('working on SOFISM d7... ')
-        start = time()
-        d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
-        d7=np.transpose(d7,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+    # try:
+    #     print('working on SOFISM d7... ')
+    #     start = time()
+    #     d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
+    #     d7=np.transpose(d7,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
 
-        d7 = d7.reshape(d7.shape[0],d7.shape[1],d7.shape[2]*d7.shape[3],d7.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
+    #     d7 = d7.reshape(d7.shape[0],d7.shape[1],d7.shape[2]*d7.shape[3],d7.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
-        ny, nx, nt, nch = d7.shape
-        imgN = int(nch * (nch + 1) / 2)
-        print(d7.shape)
+    #     ny, nx, nt, nch = d7.shape
+    #     imgN = int(nch * (nch + 1) / 2)
+    #     print(d7.shape)
 
-        SOFISM_CORRELATION_d7 = np.zeros((ny, nx, nt, imgN), dtype=float)
+    #     SOFISM_CORRELATION_d7 = np.zeros((ny, nx, nt, imgN), dtype=float)
 
-            # Precompute mean-subtracted signals for all channels
-        d7_centered = d7 - d7.mean(axis=2, keepdims=True)
+    #         # Precompute mean-subtracted signals for all channels
+    #     d7_centered = d7 - d7.mean(axis=2, keepdims=True)
 
-        chindex=-1
+    #     chindex=-1
 
-        import scipy as sc
+    #     import scipy as sc
 
-        for ch1 in range(nch):
-            sig1 = d7_centered[:, :, :, ch1]  # shape (ny, nx, nt)
-            for ch2 in range(ch1, nch, 1):
-                chindex += 1
-                print(chindex, 'd7')
-                sig2 = d7_centered[:, :, :, ch2]
-                # corr = batched_fft_correlate(sig1, sig2)
-                SOFISM_CORRELATION_d7[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
+    #     for ch1 in range(nch):
+    #         sig1 = d7_centered[:, :, :, ch1]  # shape (ny, nx, nt)
+    #         for ch2 in range(ch1, nch, 1):
+    #             chindex += 1
+    #             print(chindex, 'd7')
+    #             sig2 = d7_centered[:, :, :, ch2]
+    #             # corr = batched_fft_correlate(sig1, sig2)
+    #             SOFISM_CORRELATION_d7[:, :, :, chindex] = batched_fft_correlate(sig1, sig2)
 
-        usf = 10  # upsampling factor = subpixel precision
-        ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+30+29+28+27+26
+    #     usf = 10  # upsampling factor = subpixel precision
+    #     ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+30+29+28+27+26
 
-        shift_vec_D7, SOFISM_D7_CH = apr.APR( SOFISM_CORRELATION_d7[:,:,0,:], usf, ref_d7, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
-        SOFISM_D7 = SOFISM_D7_CH.sum(axis=2)
+    #     shift_vec_D7, SOFISM_D7_CH = apr.APR( SOFISM_CORRELATION_d7[:,:,0,:], usf, ref_d7, filter_sigma=1, pxsize = pxsizex*1000) #pxsize in nm
+    #     SOFISM_D7 = SOFISM_D7_CH.sum(axis=2)
 
-        end = time()
-        TIME_SOFISM_D7 = end - start
+    #     end = time()
+    #     TIME_SOFISM_D7 = end - start
 
-        del SOFISM_D7_CH, shift_vec_D7, SOFISM_CORRELATION_d7
+    #     del SOFISM_D7_CH, shift_vec_D7, SOFISM_CORRELATION_d7
 
-        print('done SOFISM D7: ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
-    except Exception as e:
-        print(repr(e))
+    #     print('done SOFISM D7: ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    # except Exception as e:
+    #     print(repr(e))
 
     # DISPLAY ##############################################################################################################
     fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
