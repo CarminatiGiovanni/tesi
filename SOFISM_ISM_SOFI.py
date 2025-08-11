@@ -354,7 +354,7 @@ for file in filelist:
     imgN = int(nch * (nch + 1) / 2)
     print(d1.shape)
 
-    SOFISM_CORRELATION_0_d1 = np.zeros((ny, nx, imgN), dtype=float)
+    SOFISM_CORRELATION_0_d1 = np.zeros((ny, nx, imgN), dtype=np.int16)
 
         # Precompute mean-subtracted signals for all channels
     d1_centered = d1 - d1.mean(axis=2, keepdims=True)
@@ -370,7 +370,7 @@ for file in filelist:
             print(chindex, 'd1')
             sig2 = d1_centered[:, :, :, ch2]
             # corr = batched_fft_correlate(sig1, sig2)
-            SOFISM_CORRELATION_0_d1[:, :, chindex] = batched_fft_correlate(sig1, sig2)[:,:,0]  # take only the first time point
+            SOFISM_CORRELATION_0_d1[:, :, chindex] = np.int16(batched_fft_correlate(sig1, sig2)[:,:,0])  # take only the first time point
 
     usf = 10  # upsampling factor = subpixel precision
     ref_d1 = 5+4
@@ -398,7 +398,7 @@ for file in filelist:
     imgN = int(nch * (nch + 1) / 2)
     print(d3.shape)
 
-    SOFISM_CORRELATION_0_d3 = np.zeros((ny, nx, imgN), dtype=float)
+    SOFISM_CORRELATION_0_d3 = np.zeros((ny, nx, imgN), dtype=np.int16)
 
         # Precompute mean-subtracted signals for all channels
     d3_centered = d3 - d3.mean(axis=2, keepdims=True)
@@ -414,7 +414,7 @@ for file in filelist:
             print(chindex, 'd3')
             sig2 = d3_centered[:, :, :, ch2]
             # corr = batched_fft_correlate(sig1, sig2)
-            SOFISM_CORRELATION_0_d3[:, :, chindex] = batched_fft_correlate(sig1, sig2)[:,:,0]  # take only the first time point
+            SOFISM_CORRELATION_0_d3[:, :, chindex] = np.int16(batched_fft_correlate(sig1, sig2)[:,:,0])  # take only the first time point
 
     usf = 10  # upsampling factor = subpixel precision
     ref_d3 = 9+8+7+6
@@ -444,7 +444,7 @@ for file in filelist:
     imgN = int(nch * (nch + 1) / 2)
     print(d5.shape)
 
-    SOFISM_CORRELATION_0_d5 = np.zeros((ny, nx, imgN), dtype=float)
+    SOFISM_CORRELATION_0_d5 = np.zeros((ny, nx, imgN), dtype=np.int16)
 
         # Precompute mean-subtracted signals for all channels
     d5_centered = d5 - d5.mean(axis=2, keepdims=True)
@@ -460,7 +460,7 @@ for file in filelist:
             print(chindex, 'd5')
             sig2 = d5_centered[:, :, :, ch2]
             # corr = batched_fft_correlate(sig1, sig2)
-            SOFISM_CORRELATION_0_d5[:, :, chindex] = batched_fft_correlate(sig1, sig2)[:,:,0]  # take only the first time point
+            SOFISM_CORRELATION_0_d5[:, :, chindex] = np.int16(batched_fft_correlate(sig1, sig2)[:,:,0])  # take only the first time point
 
     usf = 10  # upsampling factor = subpixel precision
     ref_d5 = 25+24+23+22+21+20+19+18+17+16+15
@@ -489,7 +489,7 @@ for file in filelist:
         imgN = int(nch * (nch + 1) / 2)
         print(d7.shape)
 
-        SOFISM_CORRELATION_0_d7 = np.zeros((ny, nx, imgN), dtype=float)
+        SOFISM_CORRELATION_0_d7 = np.zeros((ny, nx, imgN), dtype=np.int16)
 
             # Precompute mean-subtracted signals for all channels
         d7_centered = d7 - d7.mean(axis=2, keepdims=True)
@@ -505,7 +505,7 @@ for file in filelist:
                 print(chindex, 'd7')
                 sig2 = d7_centered[:, :, :, ch2]
                 # corr = batched_fft_correlate(sig1, sig2)
-                SOFISM_CORRELATION_0_d7[:, :, chindex] = batched_fft_correlate(sig1, sig2)[:,:,0]  # take only the first time point
+                SOFISM_CORRELATION_0_d7[:, :, chindex] = np.int16(batched_fft_correlate(sig1, sig2)[:,:,0])  # take only the first time point
 
         usf = 10  # upsampling factor = subpixel precision
         ref_d7 = 48+47+46+45+44+43+42+41+40+39+38+37+36+35+34+33+32+31+30+29+28+27+26
