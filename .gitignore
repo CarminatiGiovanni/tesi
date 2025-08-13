@@ -205,3 +205,4 @@ images/output/*
 !images/output/170nm 5micron 220mW 50rep stack (PSF).tiff
 !images/output/COMPARISON/
 !images/output/COMPARISON/**
+!images/170nm 5micron 220mW 50rep stack (PSF).tiff
