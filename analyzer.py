@@ -193,13 +193,14 @@ def onclick(event):
         if 0 <= x < SELECTED_CH.shape[1] and 0 <= y < SELECTED_CH.shape[0]:
             ax2.clear()
             ax2.set_title(f'Pixel ({x}, {y}) time trace')
-            ax2.plot(np.reshape(data[0, y, x, :, :, select_channel], -1).astype(np.uint8))
+            ax2.plot(np.reshape(data[0, :, y, x, :, select_channel], -1).astype(np.uint8))
             ax2.set_xlabel('Time (us)')
             ax2.set_ylabel('Intensity (a.u.)')  
+            ax2.set_yticks(np.arange(0, 10))
 
             ax3.clear()
             ax3.set_title(f'Pixel ({x}, {y}) autocorrelation concat')
-            t = np.reshape(data[0, y, x, :, :, select_channel], -1) # (rep t) -> (rep*t) concatenation
+            t = np.reshape(data[0,:, y, x, :, select_channel], -1) # (rep t) -> (rep*t) concatenation
             tm = np.mean(t)
             ax3.plot(correlazione(t,tm,t,tm))
             ax3.set_xlabel('Lag (us)')
