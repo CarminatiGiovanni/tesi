@@ -34,16 +34,5 @@ def onclick(event):
 # Connect the event
 cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
-# def onclick(event):
-#     if event.inaxes:  # Only register clicks inside axes
-#         x, y = int(event.xdata), int(event.ydata)
-#         print(f"Clicked at: x={x}, y={y}")
-#         ax.plot(x, y, 'ro')  # draw a red dot
-#         ax.text(x+5, y+5, f"({x},{y})", color="red", fontsize=8)
-#         fig.canvas.draw()  # refresh
-
-# # Connect the click event
-# fig.canvas.mpl_connect('button_press_event', onclick)
-
 plt.show()
 
