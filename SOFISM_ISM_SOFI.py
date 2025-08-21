@@ -55,7 +55,7 @@ for file in filelist:
     filename = path.join(dir,'images','2025 07 07-08 Qdots',file) # input
     savename = path.join(dir,'images','output',file) # output
     savenameSOFI = path.join(dir,'images','output','SOFI',file)
-    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL night 2.png')
+    COMPARATION_FILE_SAVING = path.join(dir,'images','output','COMPARISON',f'{file} COMPARATION FULL fix.png')
 
     f = h5py.File(filename + '.h5', 'r') # read h5 file
 
@@ -346,7 +346,7 @@ for file in filelist:
     print('working on SOFISM d1... ')
     start = time()
     d1=np.asarray([data[0,:,:,:,:,i] for i in index1], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
-    d1=np.transpose(d1,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+    d1=np.transpose(d1,(2,3,1,4,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
 
     d1 = d1.reshape(d1.shape[0],d1.shape[1],d1.shape[2]*d1.shape[3],d1.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
@@ -390,7 +390,7 @@ for file in filelist:
     print('working on SOFISM d3... ')
     start = time()
     d3=np.asarray([data[0,:,:,:,:,i] for i in index3], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
-    d3=np.transpose(d3,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+    d3=np.transpose(d3,(2,3,1,4,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
 
     d3 = d3.reshape(d3.shape[0],d3.shape[1],d3.shape[2]*d3.shape[3],d3.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
@@ -436,7 +436,7 @@ for file in filelist:
     print('working on SOFISM d5... ')
     start = time()
     d5=np.asarray([data[0,:,:,:,:,i] for i in index5], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
-    d5=np.transpose(d5,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+    d5=np.transpose(d5,(2,3,1,4,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
 
     d5 = d5.reshape(d5.shape[0],d5.shape[1],d5.shape[2]*d5.shape[3],d5.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
@@ -481,7 +481,7 @@ for file in filelist:
         print('working on SOFISM d7... ')
         start = time()
         d7=np.asarray([data[0,:,:,:,:,i] for i in index7], dtype='float') # (z,rep,y,x,t,ch) -> (ch,rep,y,x,t)
-        d7=np.transpose(d7,(2,3,4,1,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
+        d7=np.transpose(d7,(2,3,1,4,0)) # (ch,rep,y,x,t) -> (y,x,t,rep,ch)
 
         d7 = d7.reshape(d7.shape[0],d7.shape[1],d7.shape[2]*d7.shape[3],d7.shape[4]) # (y,x,t,rep,ch) ->  (y,x,t*rep,ch)
 
@@ -523,48 +523,48 @@ for file in filelist:
         print(repr(e))
 
     # DISPLAY ##############################################################################################################
-    # fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
+    fig, ax = plt.subplots(3, 4, figsize=(5*4,15))
 
-    # gra.ShowImg(SOFISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[0,0])
-    # ax[0,0].set_title('SOFISM D1 ' + str(int(TIME_SOFISM_D1/60)) + 'm' + str(int(TIME_SOFISM_D1%60)) + 's')
+    gra.ShowImg(SOFISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[0,0])
+    ax[0,0].set_title('SOFISM D1 ' + str(int(TIME_SOFISM_D1/60)) + 'm' + str(int(TIME_SOFISM_D1%60)) + 's')
 
-    # gra.ShowImg(SOFISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[0,1])
-    # ax[0,1].set_title('SOFISM D3 ' + str(int(TIME_SOFISM_D3/60)) + 'm' + str(int(TIME_SOFISM_D3%60)) + 's')
+    gra.ShowImg(SOFISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[0,1])
+    ax[0,1].set_title('SOFISM D3 ' + str(int(TIME_SOFISM_D3/60)) + 'm' + str(int(TIME_SOFISM_D3%60)) + 's')
 
-    # gra.ShowImg(SOFISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[0,2])
-    # ax[0,2].set_title('SOFISM D5 ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
+    gra.ShowImg(SOFISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[0,2])
+    ax[0,2].set_title('SOFISM D5 ' + str(int(TIME_SOFISM_D5/60)) + 'm' + str(int(TIME_SOFISM_D5%60)) + 's')
 
-    # try:
-    #     gra.ShowImg(SOFISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[0,3])
-    #     ax[0,3].set_title('SOFISM D7 ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
-    # except:
-    #     pass
+    try:
+        gra.ShowImg(SOFISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[0,3])
+        ax[0,3].set_title('SOFISM D7 ' + str(int(TIME_SOFISM_D7/60)) + 'm' + str(int(TIME_SOFISM_D7%60)) + 's')
+    except:
+        pass
 
-    # gra.ShowImg(SOFI_CONCAT[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,0])
-    # ax[1,0].set_title('SOFI CONCAT ' + str(np.round(TIME_SOFI_CONCAT,2)) + 's')
+    gra.ShowImg(SOFI_CONCAT[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,0])
+    ax[1,0].set_title('SOFI CONCAT ' + str(np.round(TIME_SOFI_CONCAT,2)) + 's')
 
-    # gra.ShowImg(SOFI_MEAN[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,1])
-    # ax[1,1].set_title('SOFI MEAN ' + str(np.round(TIME_SOFI_MEAN,2)) + 's')
+    gra.ShowImg(SOFI_MEAN[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,1])
+    ax[1,1].set_title('SOFI MEAN ' + str(np.round(TIME_SOFI_MEAN,2)) + 's')
 
-    # gra.ShowImg(SOFI_SUM[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,2])
-    # ax[1,2].set_title('SOFI SUM ' + str(np.round(TIME_SOFI_SUM,2)) + 's')
+    gra.ShowImg(SOFI_SUM[:,:,0], pxsize_x = pxsizex, fig = fig, ax = ax[1,2])
+    ax[1,2].set_title('SOFI SUM ' + str(np.round(TIME_SOFI_SUM,2)) + 's')
 
-    # gra.ShowImg(CENTRAL_SPAD, pxsize_x = pxsizex, fig = fig, ax = ax[1,3])
-    # ax[1,3].set_title('CENTRAL SPAD ')
+    gra.ShowImg(CENTRAL_SPAD, pxsize_x = pxsizex, fig = fig, ax = ax[1,3])
+    ax[1,3].set_title('CENTRAL SPAD ')
 
-    # gra.ShowImg(ISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[2,0])
-    # ax[2,0].set_title('ISM D1 ' + str(np.round(TIME_ISM_D1,2)) + 's')
+    gra.ShowImg(ISM_D1, pxsize_x = pxsizex, fig = fig, ax = ax[2,0])
+    ax[2,0].set_title('ISM D1 ' + str(np.round(TIME_ISM_D1,2)) + 's')
 
-    # gra.ShowImg(ISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[2,1])
-    # ax[2,1].set_title('ISM D3 ' + str(np.round(TIME_ISM_D3,2)) + 's')
+    gra.ShowImg(ISM_D3, pxsize_x = pxsizex, fig = fig, ax = ax[2,1])
+    ax[2,1].set_title('ISM D3 ' + str(np.round(TIME_ISM_D3,2)) + 's')
 
-    # gra.ShowImg(ISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[2,2])
-    # ax[2,2].set_title('ISM D5 ' + str(np.round(TIME_ISM_D5,2)) + 's')
+    gra.ShowImg(ISM_D5, pxsize_x = pxsizex, fig = fig, ax = ax[2,2])
+    ax[2,2].set_title('ISM D5 ' + str(np.round(TIME_ISM_D5,2)) + 's')
 
-    # gra.ShowImg(ISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[2,3])
-    # ax[2,3].set_title('ISM D7 ' + str(np.round(TIME_ISM_D7,2)) + 's')
+    gra.ShowImg(ISM_D7, pxsize_x = pxsizex, fig = fig, ax = ax[2,3])
+    ax[2,3].set_title('ISM D7 ' + str(np.round(TIME_ISM_D7,2)) + 's')
 
-    # fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
+    fig.savefig(COMPARATION_FILE_SAVING, dpi=300)
 
     CENTRAL_SPAD = np.array(CENTRAL_SPAD, dtype=np.float32)/np.max(CENTRAL_SPAD)
     ISM_D1 = np.array(ISM_D1, dtype=np.float32)/np.max(ISM_D1)
@@ -580,7 +580,7 @@ for file in filelist:
     SOFISM_D7 = np.array(SOFISM_D7, dtype=np.float32)/np.max(SOFISM_D7)
 
     try:
-        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack normalized.tiff'),
+        tiff.imwrite(path.join(dir,'images','output','COMPARISON',file + ' stack normalized fix.tiff'),
                     [CENTRAL_SPAD, ISM_D1, ISM_D3, ISM_D5, ISM_D7, SOFI_CONCAT, SOFI_MEAN, SOFI_SUM, SOFISM_D1, SOFISM_D3, SOFISM_D5, SOFISM_D7])
     except:
         pass
