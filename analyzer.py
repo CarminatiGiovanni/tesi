@@ -18,7 +18,7 @@ from os import path
 import plotly.express as px
 from time import time
 
-file = 'Qdots_770nm_34mW_FOV3um_32x32_50rip_5msPixel_ROI7'
+file = 'Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8'
 
 # Qdots_37mW_FOV5um_64x64_100rip_5msPixel # fototubo?
 # Qdots_770nm_34mW_FOV4um_64x64_100rip_1msPixel_ROI8
