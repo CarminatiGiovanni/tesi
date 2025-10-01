@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="700" height="700" viewBox="0 0 700 700"
+     role="img" aria-label="7 by 7 grid numbered 0 to 48">
+  <defs>
+    <style type="text/css"><![CDATA[
+      .cell { fill: #ffffff; stroke: #000000; stroke-width: 2; }
+      .num  { font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-size: 36px;
+              fill: #222222;
+              dominant-baseline: middle;
+              text-anchor: middle; }
+      .greencell { fill: #67ff6c; stroke: #000000; stroke-width: 2; }
+
+       .red  { fill: #ff0000; stroke: #000000; stroke-width: 2; }
+
+        
+    ]]></style>
+  </defs>
+
+  <!-- Grid: 7 columns x 7 rows, cell size = 100 -->
+  <!-- Draw cells and numbers -->
+  <!-- Row 0..6, Col 0..6 -->
+  <!-- Numbers = row*7 + col -->
+  <!-- top-left corner is (0,0) so no outer margin -->
+  <!-- Cells -->
+  <!-- we'll generate each rect + text -->
+  <!-- Row 0 -->
+  <rect class="red" x="0"   y="0"   width="100" height="100"/>
+  <text  class="num"  x="50"  y="50">0</text>
+
+  <rect class="red" x="100" y="0"   width="100" height="100"/>
+  <text  class="num"  x="150" y="50">1</text>
+
+  <rect class="red" x="200" y="0"   width="100" height="100"/>
+  <text  class="num"  x="250" y="50">2</text>
+
+  <rect class="red" x="300" y="0"   width="100" height="100"/>
+  <text  class="num"  x="350" y="50">3</text>
+
+  <rect class="red" x="400" y="0"   width="100" height="100"/>
+  <text  class="num"  x="450" y="50">4</text>
+
+  <rect class="red" x="500" y="0"   width="100" height="100"/>
+  <text  class="num"  x="550" y="50">5</text>
+
+  <rect class="red" x="600" y="0"   width="100" height="100"/>
+  <text  class="num"  x="650" y="50">6</text>
+
+  <!-- Row 1 -->
+  <rect class="red" x="0"   y="100" width="100" height="100"/>
+  <text  class="num"  x="50"  y="150">7</text>
+
+  <rect class="red" x="100" y="100" width="100" height="100"/>
+  <text  class="num"  x="150" y="150">8</text>
+
+  <rect class="red" x="200" y="100" width="100" height="100"/>
+  <text  class="num"  x="250" y="150">9</text>
+
+  <rect class="red" x="300" y="100" width="100" height="100"/>
+  <text  class="num"  x="350" y="150">10</text>
+
+  <rect class="red" x="400" y="100" width="100" height="100"/>
+  <text  class="num"  x="450" y="150">11</text>
+
+  <rect class="greencell" x="500" y="100" width="100" height="100"/>
+  <text  class="num"  x="550" y="150">12</text>
+
+  <rect class="red" x="600" y="100" width="100" height="100"/>
+  <text  class="num"  x="650" y="150">13</text>
+
+  <!-- Row 2 -->
+  <rect class="red" x="0"   y="200" width="100" height="100"/>
+  <text  class="num"  x="50"  y="250">14</text>
+
+  <rect class="red" x="100" y="200" width="100" height="100"/>
+  <text  class="num"  x="150" y="250">15</text>
+
+  <rect class="red" x="200" y="200" width="100" height="100"/>
+  <text  class="num"  x="250" y="250">16</text>
+
+  <rect class="red" x="300" y="200" width="100" height="100"/>
+  <text  class="num"  x="350" y="250">17</text>
+
+  <rect class="red" x="400" y="200" width="100" height="100"/>
+  <text  class="num"  x="450" y="250">18</text>
+
+  <rect class="red" x="500" y="200" width="100" height="100"/>
+  <text  class="num"  x="550" y="250">19</text>
+
+  <rect class="red" x="600" y="200" width="100" height="100"/>
+  <text  class="num"  x="650" y="250">20</text>
+
+  <!-- Row 3 -->
+  <rect class="red" x="0"   y="300" width="100" height="100"/>
+  <text  class="num"  x="50"  y="350">21</text>
+
+  <rect class="red" x="100" y="300" width="100" height="100"/>
+  <text  class="num"  x="150" y="350">22</text>
+
+  <rect class="red" x="200" y="300" width="100" height="100"/>
+  <text  class="num"  x="250" y="350">23</text>
+
+  <rect class="red" x="300" y="300" width="100" height="100"/>
+  <text  class="num"  x="350" y="350">24</text>
+
+  <rect class="red" x="400" y="300" width="100" height="100"/>
+  <text  class="num"  x="450" y="350">25</text>
+
+  <rect class="red" x="500" y="300" width="100" height="100"/>
+  <text  class="num"  x="550" y="350">26</text>
+
+  <rect class="red" x="600" y="300" width="100" height="100"/>
+  <text  class="num"  x="650" y="350">27</text>
+
+  <!-- Row 4 -->
+  <rect class="red" x="0"   y="400" width="100" height="100"/>
+  <text  class="num"  x="50"  y="450">28</text>
+
+  <rect class="red" x="100" y="400" width="100" height="100"/>
+  <text  class="num"  x="150" y="450">29</text>
+
+  <rect class="red" x="200" y="400" width="100" height="100"/>
+  <text  class="num"  x="250" y="450">30</text>
+
+  <rect class="red" x="300" y="400" width="100" height="100"/>
+  <text  class="num"  x="350" y="450">31</text>
+
+  <rect class="red" x="400" y="400" width="100" height="100"/>
+  <text  class="num"  x="450" y="450">32</text>
+
+  <rect class="red" x="500" y="400" width="100" height="100"/>
+  <text  class="num"  x="550" y="450">33</text>
+
+  <rect class="red" x="600" y="400" width="100" height="100"/>
+  <text  class="num"  x="650" y="450">34</text>
+
+  <!-- Row 5 -->
+  <rect class="red" x="0"   y="500" width="100" height="100"/>
+  <text  class="num"  x="50"  y="550">35</text>
+
+  <rect class="red" x="100" y="500" width="100" height="100"/>
+  <text  class="num"  x="150" y="550">36</text>
+
+  <rect class="red" x="200" y="500" width="100" height="100"/>
+  <text  class="num"  x="250" y="550">37</text>
+
+  <rect class="red" x="300" y="500" width="100" height="100"/>
+  <text  class="num"  x="350" y="550">38</text>
+
+  <rect class="red" x="400" y="500" width="100" height="100"/>
+  <text  class="num"  x="450" y="550">39</text>
+
+  <rect class="red" x="500" y="500" width="100" height="100"/>
+  <text  class="num"  x="550" y="550">40</text>
+
+  <rect class="red" x="600" y="500" width="100" height="100"/>
+  <text  class="num"  x="650" y="550">41</text>
+
+  <!-- Row 6 -->
+  <rect class="red" x="0"   y="600" width="100" height="100"/>
+  <text  class="num"  x="50"  y="650">42</text>
+
+  <rect class="red" x="100" y="600" width="100" height="100"/>
+  <text  class="num"  x="150" y="650">43</text>
+
+  <rect class="red" x="200" y="600" width="100" height="100"/>
+  <text  class="num"  x="250" y="650">44</text>
+
+  <rect class="red" x="300" y="600" width="100" height="100"/>
+  <text  class="num"  x="350" y="650">45</text>
+
+  <rect class="red" x="400" y="600" width="100" height="100"/>
+  <text  class="num"  x="450" y="650">46</text>
+
+  <rect class="red" x="500" y="600" width="100" height="100"/>
+  <text  class="num"  x="550" y="650">47</text>
+
+  <rect class="red" x="600" y="600" width="100" height="100"/>
+  <text  class="num"  x="650" y="650">48</text>
+</svg>
+
