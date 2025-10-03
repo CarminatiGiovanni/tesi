@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
      width="700" height="700" viewBox="0 0 700 700"
-     role="img" aria-label="7 by 7 grid numbered 0 to 48">
+     role="img" saria-label="7 by 7 grid numbered 0 to 48">
   <defs>
     <style type="text/css"><![CDATA[
       .cell { fill: #ffffff; stroke: #000000; stroke-width: 2; }
       .redcell { fill: #ff0000; stroke: #000000; stroke-width: 2; }
       .greencell { fill: #67ff6c; stroke: #000000; stroke-width: 2; }
       .num  { font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-size: 36px;
+              font-size: 4em;
               fill: #222222;
               dominant-baseline: middle;
               text-anchor: middle; }

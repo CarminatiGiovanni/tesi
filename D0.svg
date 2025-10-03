@@ -7,7 +7,6 @@
       .cell { fill: #ffffff; stroke: #000000; stroke-width: 2; }
       .redcell { fill: #ff0000; stroke: #000000; stroke-width: 2; }
       .greencell { fill: #67ff6c; stroke: #000000; stroke-width: 2; }
-
       .num  { font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
               font-size: 4em;
               fill: #222222;
@@ -37,27 +36,27 @@
   <!-- Row 2 -->
   <rect class="cell"    x="0"   y="200" width="100" height="100"/><text class="num" x="50" y="250">14</text>
   <rect class="cell"    x="100" y="200" width="100" height="100"/><text class="num" x="150" y="250">15</text>
-  <rect class="redcell" x="200" y="200" width="100" height="100"/><text class="num" x="250" y="250">16</text>
-  <rect class="redcell" x="300" y="200" width="100" height="100"/><text class="num" x="350" y="250">17</text>
-  <rect class="redcell" x="400" y="200" width="100" height="100"/><text class="num" x="450" y="250">18</text>
+  <rect class="cell"    x="200" y="200" width="100" height="100"/><text class="num" x="250" y="250">16</text>
+  <rect class="cell" x="300" y="200" width="100" height="100"/><text class="num" x="350" y="250">17</text>
+  <rect class="cell"    x="400" y="200" width="100" height="100"/><text class="num" x="450" y="250">18</text>
   <rect class="cell"    x="500" y="200" width="100" height="100"/><text class="num" x="550" y="250">19</text>
   <rect class="cell"    x="600" y="200" width="100" height="100"/><text class="num" x="650" y="250">20</text>
 
   <!-- Row 3 -->
   <rect class="cell"    x="0"   y="300" width="100" height="100"/><text class="num" x="50" y="350">21</text>
   <rect class="cell"    x="100" y="300" width="100" height="100"/><text class="num" x="150" y="350">22</text>
-  <rect class="redcell" x="200" y="300" width="100" height="100"/><text class="num" x="250" y="350">23</text>
+  <rect class="cell" x="200" y="300" width="100" height="100"/><text class="num" x="250" y="350">23</text>
   <rect class="redcell" x="300" y="300" width="100" height="100"/><text class="num" x="350" y="350">24</text>
-  <rect class="redcell" x="400" y="300" width="100" height="100"/><text class="num" x="450" y="350">25</text>
+  <rect class="cell" x="400" y="300" width="100" height="100"/><text class="num" x="450" y="350">25</text>
   <rect class="cell"    x="500" y="300" width="100" height="100"/><text class="num" x="550" y="350">26</text>
   <rect class="cell"    x="600" y="300" width="100" height="100"/><text class="num" x="650" y="350">27</text>
 
   <!-- Row 4 -->
   <rect class="cell"    x="0"   y="400" width="100" height="100"/><text class="num" x="50" y="450">28</text>
   <rect class="cell"    x="100" y="400" width="100" height="100"/><text class="num" x="150" y="450">29</text>
-  <rect class="redcell" x="200" y="400" width="100" height="100"/><text class="num" x="250" y="450">30</text>
-  <rect class="redcell" x="300" y="400" width="100" height="100"/><text class="num" x="350" y="450">31</text>
-  <rect class="redcell" x="400" y="400" width="100" height="100"/><text class="num" x="450" y="450">32</text>
+  <rect class="cell"    x="200" y="400" width="100" height="100"/><text class="num" x="250" y="450">30</text>
+  <rect class="cell" x="300" y="400" width="100" height="100"/><text class="num" x="350" y="450">31</text>
+  <rect class="cell"    x="400" y="400" width="100" height="100"/><text class="num" x="450" y="450">32</text>
   <rect class="cell"    x="500" y="400" width="100" height="100"/><text class="num" x="550" y="450">33</text>
   <rect class="cell"    x="600" y="400" width="100" height="100"/><text class="num" x="650" y="450">34</text>
 
